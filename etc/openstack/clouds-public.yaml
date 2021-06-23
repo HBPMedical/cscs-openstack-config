@@ -1,0 +1,57 @@
+# This is a clouds.yaml file, which can be used by OpenStack tools as a source
+# of configuration on how to connect to a cloud. If this is your only cloud,
+# just put this file in your current directory, ~/.config/openstack/clouds.yaml
+# or in /etc/openstack, and tools like python-openstackclient will just work
+# with no further config. (You will need to add your password to the auth section)
+# Check the different authentication types here:
+# https://docs.openstack.org/keystoneauth/latest/plugin-options.html
+# If you have more than one cloud account, add the cloud entry to the clouds
+# section of your existing file and you can refer to them by name with
+# OS_CLOUD=openstack or --os-cloud=openstack
+global_parameters:
+  auth_type: &auth_type v3oidcpassword
+  auth_url_pollux: &auth_url_pollux https://pollux.cscs.ch:13000/v3
+  auth_url_castor: &auth_url_castor https://castor.cscs.ch:13000/v3
+  project_domain_name: &project_domain_name federated_domain
+  identity_provider: &identity_provider cscskc
+  protocol: &protocol openid
+  client_id_pollux: &client_id_pollux pollux-prod
+  client_id_castor: &client_id_castor castor
+  client_secret_pollux: &client_secret_pollux 82c7a379-f5ee-48c7-8a6b-7ee15557e28e
+  client_secret_castor: &client_secret_castor c6cc606a-5ae4-4e3e-8a19-753ad265f521
+  discovery_endpoint: &discovery_endpoint https://auth.cscs.ch/auth/realms/cscs/.well-known/openid-configuration
+  identity_api_version: &identity_api_version 3
+
+public-clouds:
+  cscs-pollux-unscoped-token:
+    auth_type: token
+    auth:
+      auth_url: *auth_url_pollux
+    identity_api_version: *identity_api_version
+  cscs-castor-unscoped-token:
+    auth_type: token
+    auth:
+      auth_url: *auth_url_castor
+    identity_api_version: *identity_api_version
+  cscs-pollux:
+    auth_type: *auth_type
+    auth:
+      auth_url: *auth_url_pollux
+      identity_provider: *identity_provider
+      protocol: *protocol
+      client_id: *client_id_pollux
+      client_secret: *client_secret_pollux
+      discovery_endpoint: *discovery_endpoint
+      project_domain_name: *project_domain_name
+    identity_api_version: *identity_api_version
+  cscs-castor:
+    auth_type: *auth_type
+    auth:
+      auth_url: *auth_url_castor
+      identity_provider: *identity_provider
+      protocol: *protocol
+      client_id: *client_id_castor
+      client_secret: *client_secret_castor
+      discovery_endpoint: *discovery_endpoint
+      project_domain_name: *project_domain_name
+    identity_api_version: *identity_api_version

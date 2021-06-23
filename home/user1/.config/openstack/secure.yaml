@@ -1,0 +1,21 @@
+global_parameters:
+  username: &username bpXXXXXX
+  password: &password MyP455w0rd
+
+clouds:
+  ich0XX:
+    auth:
+      username: *username
+      password: *password
+  ich0XX-castor:
+    auth:
+      username: *username
+      password: *password
+  ich0XXhp:
+    auth:
+      username: *username
+      password: *password
+  ich0XXhp-castor:
+    auth:
+      username: *username
+      password: *password
